@@ -104,7 +104,10 @@ async function init() {
   }
 
   const q = new URLSearchParams(location.search);
-  const reqTo = q.get('to');
+  let reqTo = q.get('to');
+  if (!reqTo && pubKeys.length === 1) {
+    reqTo = pubKeys[0].keys[0].getFingerprint();
+  }
   if (reqTo) {
     toElem.value = reqTo;
     await handleToSelect();
