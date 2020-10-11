@@ -1,0 +1,36 @@
+body {
+  margin: 1em;
+  font-family: sans-serif;
+}
+
+textarea {
+  width: 40em;
+  height: 10em;
+  margin: 0.5em 0;
+  font-family: sans-serif;
+  padding: 0.5em;
+}
+
+label {
+  font-weight: bold;
+}
+
+#subject {
+  width: 30em;
+}
+
+pre {
+  font-size: 120%;
+}
+
+#count-line {
+  font-size: 70%;
+  font-style: italic;
+  margin-top: -5px;
+  color: #555;
+}
+
+#count-line.over {
+  color: red;
+  font-weight: bold;
+}

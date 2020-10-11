@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PGP Encrypt Message</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <h1>PGP Message Encryptor</h1>
+    <form id="encrypt-form">
+      <div>
+        <label for="to">To:</label>
+        <select name="to" id="to">
+          <option value="">Please select a recipient...</option>
+        </select>
+      </div>
+      <div>
+        <textarea id="message" placeholder="Your message..."></textarea>
+      </div>
+      <div id="count-line">
+        <span id="count">0</span> / <span id="max-chars">0</span> encoded chars
+      </div>
+    </form>
+    <form id="email-form" style="display: none">
+      <hr>
+      <div>
+        <label for="email-to">To:</label>
+        <span id="email-to"></span>
+      </div>
+      <div>
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject"></input>
+      </div>
+      <div>
+        <label for="body"></label>
+        <pre id="body"></pre>
+      </div>
+      <input type="submit" value="Send E-mail">
+    </form>
+    <script src="openpgp.min.js"></script>
+    <script src="pubkeys.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
