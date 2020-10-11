@@ -1,5 +1,7 @@
 # PGP Message Encryptor Static HTML
 
+Demo: https://dbushong.github.io/html-pgp-sender/
+
 This is a serverless, locally runnable JavaScript Web App which will accept
 a short message and encrypt it using one of a set of public keys you include
 in the app.  It provides a convenient button which can then open the result
