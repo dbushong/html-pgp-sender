@@ -7,7 +7,7 @@ a short message and encrypt it using one of a set of public keys you include
 in the app.  It provides a convenient button which can then open the result
 (as a `mailto:` link) in the user's email client of choice.
 
-The simple purpose is to provide non-technical users a trivially simple way
+The purpose is to provide non-technical users a trivially simple way
 of securely sending small bits of information (e.g. passwords) to you, without
 them having to install any tools.
 
