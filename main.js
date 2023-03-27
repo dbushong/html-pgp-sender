@@ -13,13 +13,6 @@ function makeMailToURL(email, subject, body) {
   return url.href;
 }
 
-function makeMailToLink(email, subject, body) {
-  const a = document.createElement('a');
-  a.href = makeMailToURL(email, subject, body);
-  a.innerText = 'Send via E-mail';
-  return a;
-}
-
 async function handleEncrypt() {
   const iPlusOne = $('to').selectedIndex;
   if (!iPlusOne) return;
@@ -60,11 +53,11 @@ async function handleSend() {
   
   const { user } = await key.getPrimaryUser();
 
-  const link = makeMailToLink(
+  const url = makeMailToURL(
     user.userID.email, $('subject').value, $('body').innerText
   );
 
-  location.href = link;
+  location.href = url;
 }
 
 async function handleToSelect() {
