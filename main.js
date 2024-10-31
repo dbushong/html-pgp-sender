@@ -1,3 +1,6 @@
+import * as openpgp from './openpgp.min.mjs';
+import { pubKeyStrings } from './pubkeys.js';
+
 let pubKeys = [];
 const $ = document.getElementById.bind(document);
 
@@ -10,13 +13,6 @@ function makeMailToURL(email, subject, body) {
   return url.href;
 }
 
-function makeMailToLink(email, subject, body) {
-  const a = document.createElement('a');
-  a.href = makeMailToURL(email, subject, body);
-  a.innerText = 'Send via E-mail';
-  return a;
-}
-
 async function handleEncrypt() {
   const iPlusOne = $('to').selectedIndex;
   if (!iPlusOne) return;
@@ -27,20 +23,20 @@ async function handleEncrypt() {
     return;
   }
 
-  const keys = pubKeys[iPlusOne - 1].keys;
+  const key = pubKeys[iPlusOne - 1];
 
-  const { data } = await openpgp.encrypt({
-    message: openpgp.message.fromText($('message').value),
-    publicKeys: keys,
+  const data = await openpgp.encrypt({
+    message: await openpgp.createMessage({ text: $('message').value }),
+    encryptionKeys: key,
   });
 
-  const { user } = await keys[0].getPrimaryUser();
+  const { user } = await key.getPrimaryUser();
 
   $('email-form').style.display = '';
-  $('email-to').innerText = user.userId.userid;
+  $('email-to').innerText = user.userID.userID;
   $('body').innerText = data;
   const count = makeMailToURL(
-    user.userId.email, $('subject').value, data
+    user.userID.email, $('subject').value, data
   ).length;
   $('count').innerText = count;
   $('count-line').classList.toggle('over', count > MAX_CHARS);
@@ -53,15 +49,15 @@ async function handleEncrypt() {
 }
 
 async function handleSend() {
-  const [key] = pubKeys[$('to').selectedIndex - 1].keys;
+  const key = pubKeys[$('to').selectedIndex - 1];
   
   const { user } = await key.getPrimaryUser();
 
-  const link = makeMailToLink(
-    user.userId.email, $('subject').value, $('body').innerText
+  const url = makeMailToURL(
+    user.userID.email, $('subject').value, $('body').innerText
   );
 
-  location.href = link;
+  location.href = url;
 }
 
 async function handleToSelect() {
@@ -90,16 +86,16 @@ function listener(fn) {
 async function init() {
   pubKeys = window.pubKeys = await Promise.all(
     pubKeyStrings.map(
-      s => openpgp.key.readArmored(s.trim().replace(/^[ \t]+/gm, ''))
+      s => openpgp.readKey({ armoredKey: s.trim().replace(/^[ \t]+/gm, '') })
     )
   );
 
   const toElem = $('to');
-  for (const { keys: [key] } of pubKeys) {
+  for (const key of pubKeys) {
     const opt = document.createElement('option');
     const { user } = await key.getPrimaryUser();
     opt.value = key.getFingerprint();
-    opt.innerText = user.userId.userid;
+    opt.innerText = user.userID.userID;
     toElem.appendChild(opt);
   }
 

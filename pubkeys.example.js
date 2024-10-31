@@ -1,4 +1,4 @@
-window.pubKeyStrings = [
+export const pubKeyStrings = [
   `
     -----BEGIN PGP PUBLIC KEY BLOCK-----
 
