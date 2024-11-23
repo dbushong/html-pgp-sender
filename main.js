@@ -50,7 +50,7 @@ async function handleEncrypt() {
 
 async function handleSend() {
   const key = pubKeys[$('to').selectedIndex - 1];
-  
+
   const { user } = await key.getPrimaryUser();
 
   const url = makeMailToURL(
@@ -102,7 +102,7 @@ async function init() {
   const q = new URLSearchParams(location.search);
   let reqTo = q.get('to');
   if (!reqTo && pubKeys.length === 1) {
-    reqTo = pubKeys[0].keys[0].getFingerprint();
+    reqTo = pubKeys[0].getFingerprint();
   }
   if (reqTo) {
     toElem.value = reqTo;
